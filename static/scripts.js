@@ -1,5 +1,5 @@
 function calculateLoanRepayment() {
-    //Look up the input and output elements in the document
+    //input and output elements looked up in the document
     let loanAmount = document.getElementById("amount");
     let apr = document.getElementById("apr");
     let years = document.getElementById("years");
@@ -7,8 +7,8 @@ function calculateLoanRepayment() {
     let total = document.getElementById("total");
     let totalinterest = document.getElementById("totalinterest");
     
-  // Get the user's input from the input elements.
-  // Convert interest from a percentage to a decimal, and convert from
+  // Obtaining the user's input from the input elements.
+  // Convert interestRatePerMonth from a percentage to a decimal, and convert from
   // an annual rate to a monthly rate. Convert payment period in years
   // to the number of monthly payments.
   let principal = parseFloat(loanAmount.value);
@@ -19,79 +19,65 @@ function calculateLoanRepayment() {
   let x = Math.pow(1 + interestRatePerMonth, payments); //Math.pow computes powers
   let monthly = (principal*x*interestRatePerMonth)/(x-1);
   
-  // If the result is a finite number, the user's input was good and
-  // we have meaningful results to display
+  // Meaningful results to display if results is finite
   if (isFinite(monthly)){
-    // Fill in the output fields, rounding to 2 decimal places
+    // Output fields, rounded to 2 decimal places
     payment.innerHTML = monthly.toFixed(2);
     total.innerHTML = (monthly * payments).toFixed(2);
     totalinterest.innerHTML = ((monthly*payments)-principal).toFixed(2);
   
-  
-   // Advertise: find and display local lenders, but ignore network errors
-   try { // Catch any errors that occur within these curly braces
-  //  getLenders(amount.value, apr.value, years.value, zipcode.value);
+
+   try { // Catch any errors in the elements
+    getLenders(amount.value, apr.value, years.value);
    }
     
-    catch(e) { /* And ignore those errors */ }
-   // Finally, chart loan balance, and interestRatePerMonth and equity payments
-   chart(principal, nterestRatePerMonth, monthly, payments);
+    catch(e) { /* And ignore these errors */ };
    }
    else {
-   // Result was Not-a-Number or infinite, which means the input was
-   // incomplete or invalid. Clear any previously displayed output.
-   payment.innerHTML = ""; // Erase the content of these elements
+   // Clear previously displayed output.
+   payment.innerHTML = ""; // Erase the content of the elements
    total.innerHTML = ""
    totalinterest.innerHTML = "";
-   chart(); // With no arguments, clears the chart
    }
   }
 
-  // Automatically attempt to restore input fields when the document first loads.
+  // Attempt to restore input fields when the document first loads.
   window.onload = function() {
-   // If the browser supports localStorage and we have some stored data
    if (window.localStorage && localStorage.loan_amount) {
    document.getElementById("amount").value = localStorage.loan_amount;
    document.getElementById("apr").value = localStorage.loan_apr;
    document.getElementById("years").value = localStorage.loan_years;
    }
   };
-  // Pass the user's input to a server-side script which can (in theory) return
-  // a list of links to local lenders interested in making loans. This example
-  // does not actually include a working implementation of such a lender-finding
-  // service. But if the service existed, this function would work with it.
+  // Passing the user's input to a server-side script
   function getLenders(loanAmount, apr, years) {
-   // If the browser does not support the XMLHttpRequest object, do nothing
    if (!window.XMLHttpRequest) return;
-   // Find the element to display the list of lenders in
+   // Finding the element to display the list of lenders in
    var ad = document.getElementById("lenders");
    if (!ad) return; // Quit if no spot for output 
     
-    // Encode the user's input as query parameters in a URL
+    // User's input encoded as query parameters in a URL
    var url = "getLenders.php" + // Service url plus
    "?amt=" + encodeURIComponent(loanAmount) + // user data in query string
    "&apr=" + encodeURIComponent(apr) +
    "&yrs=" + encodeURIComponent(years) ;
 
-   // Fetch the contents of that URL using the XMLHttpRequest object
+   // Contents of the URL fetched using the XMLHttpRequest object
    var req = new XMLHttpRequest(); // Begin a new request
    req.open("GET", url); // An HTTP GET request for the url
-   req.send(null); // Send the request with no body
-   // Before returning, register an event handler function that will be called
-   // at some later time when the HTTP server's response arrives. This kind of
-   // asynchronous programming is very common in client-side JavaScript.
+   req.send(null); // Request with no sent with no body
+   // event handler function that will be called when the HTTP server's response arrives.
    req.onreadystatechange = function() {
    if (req.readyState == 4 && req.status == 200) {
-   // If we get here, we got a complete valid HTTP response
    var response = req.responseText; // HTTP response as a string
    var lenders = JSON.parse(response); // Parse it to a JS array
-   // Convert the array of lender objects to a string of HTML
+   //Array of lender objects converted to a string of HTML
    var list = "";
    for(var i = 0; i < lenders.length; i++) {
    list += "<li><a href='" + lenders[i].url + "'>" +
    lenders[i].name + "</a>";
    }
-   // Display the HTML in the element from above.
+   //Above HTML element displayed.
    ad.innerHTML = "<ul>" + list + "</ul>";
    }
    }
