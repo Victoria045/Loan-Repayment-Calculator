@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Loan Repayment Calculator</title>
+    <link rel="stylesheet" href="static/index.css">
+    <script src="static/scripts.js"></script> 
+</head>
+<body>
+	<div class="body">
+		<h2>Input your Loan Amount to compute your monthly payment rate.</h2>
+		<table>
+		<tr><th>Enter Loan Repayment Data:</th>
+			<td></td>
+			<tr><td id="td">Amount of the loan (ksh):</td>
+			<td id="td"><input id="amount" placeholder="input loan amount" onchange="calculateLoanRepayment();"></td>
+			<td rowspan=7>
+			<tr><td id="td">Annual interest rate (%):</td>
+			<td id="td"><input id="apr" placeholder="input interest rate" onchange="calculateLoanRepayment();"></td></tr>
+			<tr><td id="td">Repayment period (years):</td>
+			<td id="td"><input id="years" placeholder="input repayment period" onchange="calculateLoanRepayment();"></td>
+			<tr><th style="padding: 0.5rem;">Calculate Payments:</th>
+			<td><button onclick="calculateLoanRepayment();">Calculate</button></td></tr>
+			<tr><td id="td">Monthly payment:</td>
+			<td id="td" class="ksh1">ksh<span class="output" id="payment"></span></td></tr>
+			<tr><td id="td">Total payment:</td>
+			<td id="td" class="ksh">ksh<span class="output" id="total"></span></td></tr>
+			<tr><td id="td">Total interest:</td>
+			<td id="td" class="ksh">ksh<span class="output" id="totalinterest"></span></td></tr>
+			</table>
+	</div>
+</body>
+</html>

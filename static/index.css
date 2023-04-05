@@ -1,0 +1,55 @@
+body {
+  background-color: rgb(209, 209, 250);
+}
+.body {
+  margin: 5rem auto;
+  padding: 0 1.5rem;
+
+}
+h2 {
+  text-align: center;
+}
+.output {
+    font-weight:bold;
+    font-size: 18px;
+    padding-left: 2px;
+  }
+  #payment {
+    /* text-decoration:underline; */
+    color:teal;
+  }
+  input, textarea {
+    background-color : rgb(209, 209, 250);
+    outline: none;
+    border: 1px solid rgb(199, 199, 199);
+
+  
+  }
+  button {
+    background-color: rgb(151, 151, 247);
+    outline: none;
+    border: none;
+    border-radius: 5%;
+    padding: 0.5rem;
+  }
+  table{
+    border:1px solid rgb(199, 199, 199);
+    border-radius: 3%;
+  }
+  td {
+    padding: 0.5rem;
+  }
+  table {
+    margin: 0rem auto;
+    padding: 1.5rem;
+  }
+  input {
+    padding: 0.3rem;
+  }
+  .ksh1 {
+    color:rgb(4, 59, 59);
+  }
+  .ksh1,.ksh {
+    font-size: 14px;
+    /* color:teal; */
+  }
